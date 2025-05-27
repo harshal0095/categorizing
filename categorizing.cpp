@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-const int MAX_SIZE = 100;  // Maximum size  array
+const int MAX_SIZE = 100;  // Maximum size of array
 
 // Selection Sort
 void selectionSort(int arr[], int n) {
@@ -55,6 +55,24 @@ int linearSearch(int arr[], int n, int key) {
     return -1;
 }
 
+// Binary Search (Array must be sorted)
+int binarySearch(int arr[], int n, int target) {
+    int left = 0;
+    int right = n - 1;
+
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == target)
+            return mid;
+        else if (arr[mid] < target)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return -1;  // Not found
+}
+
 // Display Array
 void displayArray(int arr[], int n) {
     cout << "Array: ";
@@ -64,7 +82,7 @@ void displayArray(int arr[], int n) {
 
 int main() {
     int arr[MAX_SIZE];
-    int n = 0;  
+    int n = 0;  // Size of array
     int choice;
 
     while (true) {
@@ -74,7 +92,8 @@ int main() {
         cout << "3. Selection Sort\n";
         cout << "4. Merge Sort\n";
         cout << "5. Linear Search\n";
-        cout << "6. Exit\n";
+        cout << "6. Binary Search\n";
+        cout << "7. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -115,7 +134,7 @@ int main() {
                 cout << "Array is empty. Please input the array first.\n";
             } else {
                 int key;
-                cout << "Enter element to search: ";
+                cout << "Enter element to search (Linear Search): ";
                 cin >> key;
                 int pos = linearSearch(arr, n, key);
                 if (pos != -1)
@@ -124,6 +143,21 @@ int main() {
                     cout << "Element not found.\n";
             }
         } else if (choice == 6) {
+            if (n == 0) {
+                cout << "Array is empty. Please input the array first.\n";
+            } else {
+                int key;
+                cout << "Enter element to search (Binary Search): ";
+                cin >> key;
+                // IMPORTANT: Binary search requires sorted array
+                // You may warn user to sort first
+                int pos = binarySearch(arr, n, key);
+                if (pos != -1)
+                    cout << "Element found at position: " << pos + 1 << endl;
+                else
+                    cout << "Element not found.\n";
+            }
+        } else if (choice == 7) {
             cout << "Exiting program. Goodbye!\n";
             break;
         } else {
